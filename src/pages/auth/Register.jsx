@@ -5,7 +5,7 @@ import Loader from '../../components/Loader'
 import { setCredientials} from '../../redux/features/auth/authSlice'
 import { toast } from 'react-toastify'
 import { useRegisterMutation } from '../../redux/userApiSlice'
-import Login from './Login'
+
 const Register = () => {
     const [username,setUsername]=useState("");
     const [email,setEmail]=useState("");
@@ -24,7 +24,7 @@ const Register = () => {
 
     useEffect(()=>{
         if(userInfo){
-            navigate('redirect')
+            navigate(redirect)
         }
     },[navigate,redirect,userInfo])
 
@@ -34,7 +34,7 @@ const Register = () => {
         toast.error("Password do not match");
     }else{
         try{
-         const res=await {username,email,password}.unwrap();
+         const res=await register({username,email,password}).unwrap();
          dispatch(setCredientials({...res}));
          navigate(redirect);
          toast.success("User registered successfully");
