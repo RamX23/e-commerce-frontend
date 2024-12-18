@@ -8,12 +8,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         url: ORDERS_URL,
         method: "POST",
         body: order,
+        credentials: "include",
       }),
     }),
 
     getOrderDetails: builder.query({
       query: (id) => ({
         url: `${ORDERS_URL}/${id}`,
+        credentials: "include",
       }),
     }),
 
@@ -22,18 +24,21 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         url: `${ORDERS_URL}/${orderId}/pay`,
         method: "PUT",
         body: details,
+        credentials: "include",
       }),
     }),
 
     getPaypalClientId: builder.query({
       query: () => ({
         url: PAYPAL_URL,
+        credentials: "include",
       }),
     }),
 
     getMyOrders: builder.query({
       query: () => ({
         url: `${ORDERS_URL}/mine`,
+        credentials: "include",
       }),
       keepUnusedDataFor: 5,
     }),
@@ -41,6 +46,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     getOrders: builder.query({
       query: () => ({
         url: ORDERS_URL,
+        credentials: "include",
       }),
     }),
 
@@ -48,19 +54,29 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       query: (orderId) => ({
         url: `${ORDERS_URL}/${orderId}/deliver`,
         method: "PUT",
+        credentials: "include",
       }),
     }),
 
     getTotalOrders: builder.query({
-      query: () => `${ORDERS_URL}/total-orders`,
+      query: () => ({
+        url: `${ORDERS_URL}/total-orders`,
+        credentials: "include",
+      }),
     }),
 
     getTotalSales: builder.query({
-      query: () => `${ORDERS_URL}/total-sales`,
+      query: () => ({
+        url: `${ORDERS_URL}/total-sales`,
+        credentials: "include",
+      }),
     }),
 
     getTotalSalesByDate: builder.query({
-      query: () => `${ORDERS_URL}/total-sales-by-date`,
+      query: () => ({
+        url: `${ORDERS_URL}/total-sales-by-date`,
+        credentials: "include",
+      }),
     }),
   }),
 });
@@ -69,7 +85,6 @@ export const {
   useGetTotalOrdersQuery,
   useGetTotalSalesQuery,
   useGetTotalSalesByDateQuery,
-  // ------------------
   useCreateOrderMutation,
   useGetOrderDetailsQuery,
   usePayOrderMutation,
