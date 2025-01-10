@@ -74,7 +74,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 
     getTotalSalesByDate: builder.query({
       query: () => ({
-        url: `${ORDERS_URL}/total-sales-by-date`,
+        url: `${ORDERS_URL}/sales-bydate`,
         credentials: "include",
       }),
     }),
