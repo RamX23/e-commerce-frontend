@@ -1,5 +1,6 @@
 import Chart from "react-apexcharts";
 import { useGetUsersQuery } from "../../redux/userApiSlice";
+
 import {
   useGetTotalOrdersQuery,
   useGetTotalSalesByDateQuery,
@@ -16,6 +17,7 @@ const AdminDashboard = () => {
   const { data: customers, isLoading: loading } = useGetUsersQuery();
   const { data: orders, isLoading: loadingTwo } = useGetTotalOrdersQuery();
   const { data: salesDetail } = useGetTotalSalesByDateQuery();
+  const [sale,setsale]=useState([]);
 
   const [state, setState] = useState({
     options: {
@@ -66,27 +68,30 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    if (salesDetail) {
-      const formattedSalesDate = salesDetail.map((item) => ({
-        x: item._id,
-        y: item.totalSales,
+    if (Array.isArray(salesDetail?.salesByDate) && salesDetail.salesByDate.length > 0) {
+      const filteredSalesDetail = salesDetail.salesByDate.filter(item => item._id !== null);
+  
+      const formattedSalesDate = filteredSalesDetail.map((item) => ({
+        x: item._id, 
+        y: item.totalsales, 
       }));
-
+  
       setState((prevState) => ({
         ...prevState,
         options: {
           ...prevState.options,
           xaxis: {
-            categories: formattedSalesDate.map((item) => item.x),
+            categories: formattedSalesDate.map((item) => item.x), 
           },
         },
-
         series: [
           { name: "Sales", data: formattedSalesDate.map((item) => item.y) },
         ],
       }));
     }
   }, [salesDetail]);
+  
+  
 
   return (
     <>
